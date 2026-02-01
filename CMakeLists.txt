@@ -3,9 +3,10 @@ project(cas)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Библиотека
-add_library(cas lib/src/main.cpp)
+# Собираем все .cpp из lib/src рекурсивно
+file(GLOB_RECURSE LIB_SOURCES "${CMAKE_SOURCE_DIR}/lib/src/**/*.cpp")
+
+add_library(cas ${LIB_SOURCES})
 target_include_directories(cas PUBLIC ${CMAKE_SOURCE_DIR}/lib/src)
 
-# Тесты
 add_subdirectory(lib/tests)

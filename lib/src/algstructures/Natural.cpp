@@ -3,9 +3,9 @@
 #include <cmath>
 #include <algorithm>
 
-std::string Natural::toString() {
+std::string Natural::toString() const {
     if (this->nums_.empty())
-        throw UniversalStringException("atypical behavior, the vector of numbers should not be empty");
+        throw UniversalStringException("Natural: atypical behavior, the vector of numbers should not be empty");
     std::string result(this->nums_.size(), '0');
     for (int i = this->nums_.size() - 1; i >= 0; --i) {
         result[this->nums_.size() - i - 1] = '0' + this->nums_.at(i);
@@ -15,12 +15,12 @@ std::string Natural::toString() {
 
 Natural::Natural(const std::string& str) {
     if (str.empty())
-        throw UniversalStringException("wrong argument, the string should not be empty");
+        throw UniversalStringException("Natural:  wrong argument, the string should not be empty");
     nums_.resize(str.size());
     for (std::size_t i = 0; i < str.size(); ++i) {
         char c = str[str.size() - 1 - i];
         if (c < '0' || c > '9')
-            throw UniversalStringException("wrong argument, string contains non-digit character");
+            throw UniversalStringException("Natural:  wrong argument, string contains non-digit character");
         nums_[i] = c - '0';
     }
     while (nums_.size() > 1 && nums_.back() == 0)
@@ -33,7 +33,7 @@ const std::vector<uint8_t>& Natural::getNums() const noexcept {
 
 Natural::Natural(const std::vector<uint8_t>& CpNumbers) {
     if (CpNumbers.empty())
-        throw UniversalStringException("wrong argument, the vector of numbers should not be empty");
+        throw UniversalStringException("Natural:  wrong argument, the vector of numbers should not be empty");
     this->nums_ = CpNumbers;
     while (this->nums_.size() > 1 && this->nums_.back() == 0) {
         this->nums_.pop_back();
@@ -53,15 +53,12 @@ uint8_t Natural::cmp(const Natural* other) const {
     return 0;
 }
 
-// N2
 bool Natural::operator!=(std::size_t val) const {
     if (val == 0)
         return !(nums_.size() == 1 && nums_[0] == 0);
-    // для других значений — общий случай не реализован
     return true;
 }
 
-// N3
 void Natural::operator++() {
     uint8_t carry = 1;
     for (size_t i = 0; i < this->nums_.size() && carry; ++i) {
@@ -72,7 +69,6 @@ void Natural::operator++() {
     if (carry) this->nums_.push_back(carry);
 }
 
-// N4
 Natural Natural::operator+(const Natural& other) const {
     size_t n = this->nums_.size();
     size_t m = other.nums_.size();
@@ -91,11 +87,11 @@ Natural Natural::operator+(const Natural& other) const {
     return Natural(res);
 }
 
-// N5
+
 Natural Natural::operator-(const Natural& other) const {
     uint8_t comparison = this->cmp(&other);
     if (comparison == 1) {
-        throw UniversalStringException("NaturalNumber::SUB_NN_N: subtrahend larger than minuend");
+        throw UniversalStringException("Natural:  subtrahend larger than minuend");
     }
     if (comparison == 0) return Natural(std::vector<uint8_t>{0});
     std::vector<uint8_t> res(this->nums_.size(), 0);
@@ -115,10 +111,10 @@ Natural Natural::operator-(const Natural& other) const {
     return Natural(res);
 }
 
-// N6
+
 Natural Natural::operator*(std::size_t b) const {
     if (b > 9) {
-        throw UniversalStringException("NaturalNumber::MUL_ND_N: digit out of range (" + std::to_string(b) + ")");
+        throw UniversalStringException("Natural:  digit out of range (" + std::to_string(b) + ")");
     }
     if (b == 0) return Natural(std::vector<uint8_t>{0});
     std::vector<uint8_t> res;
@@ -136,14 +132,13 @@ Natural Natural::operator*(std::size_t b) const {
     return Natural(res);
 }
 
-// N7
 Natural Natural::multiplyByPowerOfTen(std::size_t k) const {
 
 	if (!(*this != 0))
 		return *this;
 
 	if (this->nums_.size() > SIZE_MAX - k) {
-		throw UniversalStringException("The size of number is greater than " + std::to_string(SIZE_MAX));
+		throw UniversalStringException("Natural:  The size of number is greater than " + std::to_string(SIZE_MAX));
 	}
 
 	std::vector<uint8_t> res;
@@ -154,7 +149,7 @@ Natural Natural::multiplyByPowerOfTen(std::size_t k) const {
 
 	return Natural(res);
 }
-// N8
+
 Natural Natural::operator*(const Natural& other) const {
     if ((this->nums_.size() == 1 && this->nums_[0] == 0) ||
         (other.nums_.size() == 1 && other.nums_[0] == 0)) {
@@ -177,23 +172,21 @@ Natural Natural::operator*(const Natural& other) const {
     return Natural(res);
 }
 
-// N9
 Natural Natural::subtractMultiplied(const Natural& other, std::size_t c) const {
     if (c > 9)
-        throw UniversalStringException("NaturalNumber::subtractMultiplied: The multiplier is not a digit from 0 to 9!");
+        throw UniversalStringException("Natural:  The multiplier is not a digit from 0 to 9!");
     Natural multiplied = other * c;
     if (cmp(&multiplied) == 1)
-        throw UniversalStringException("NaturalNumber::subtractMultiplied: the subtracted is greater than the reduced");
+        throw UniversalStringException("Natural:  the subtracted is greater than the reduced");
     return *this - multiplied;
 }
 
-// N10
 Natural Natural::getFirstDivisionDigit(const Natural& other) const {
 	if (other == Natural("0")) {
-		throw UniversalStringException("Natural::getFirstDivisionDigit: Division by zero!");
+		throw UniversalStringException("Natural:  Division by zero!");
 	}
 	if (*this < other) {
-		throw UniversalStringException("NaturalNumber::getFirstDivisionDigit: First less than second");
+		throw UniversalStringException("Natural:  First less than second");
 	}
 
 	std::size_t k = nums_.size() - other.getNums().size();
@@ -213,10 +206,9 @@ Natural Natural::getFirstDivisionDigit(const Natural& other) const {
 	return Natural("0");
 }
 
-// N11
 Natural Natural::operator/(const Natural& other) const {
     if (other == Natural("0")) {
-        throw UniversalStringException("can not divide by zero");
+        throw UniversalStringException("Natural: can not divide by zero");
     }
     if (this->cmp(&other) == 1) {
         return Natural(std::vector<uint8_t>{0});
@@ -250,10 +242,9 @@ Natural Natural::operator/(const Natural& other) const {
     return Natural(result);
 }
 
-// N12
 Natural Natural::operator%(const Natural& other) const {
     if (other == Natural("0")) {
-        throw UniversalStringException("can not divide by zero");
+        throw UniversalStringException("Natural:  can not divide by zero");
     }
     if (cmp(&other) == 1) return *this;
     Natural q = *this / other;
@@ -261,12 +252,11 @@ Natural Natural::operator%(const Natural& other) const {
     return *this - product;
 }
 
-// N13
 Natural Natural::gcd(const Natural& a, const Natural& b) {
     Natural first = a;
     Natural second = b;
     if (first == Natural("0") && second == Natural("0")) {
-        throw UniversalStringException("the gcd for two zeros is not uniquely defined");
+        throw UniversalStringException("Natural: the gcd for two zeros is not uniquely defined");
     }
     if (!(second != 0)) {
         return first;
@@ -279,10 +269,10 @@ Natural Natural::gcd(const Natural& a, const Natural& b) {
     return first;
 }
 
-// N14
+
 Natural Natural::lcm(const Natural& a, const Natural& b) {
     if (a == Natural("0") || b == Natural("0")) {
-        throw UniversalStringException("the lcm for zeros is not uniquely defined");
+        throw UniversalStringException("Natural:  the lcm for zeros is not uniquely defined");
     }
     return (a * b) / gcd(a, b);
 }

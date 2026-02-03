@@ -21,7 +21,7 @@ public:
     Natural(const std::string& str);
 
     // Метод которые необходим для визуализации числа.
-    std::string toString();
+    std::string toString() const;
 
     const std::vector<uint8_t>& getNums() const noexcept;
     uint8_t cmp(const Natural* other) const;

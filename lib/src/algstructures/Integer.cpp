@@ -17,7 +17,7 @@ Integer::Integer(const Natural& nat, bool is_negative)
         is_negative_ = false;
 }
 
-// Геттеры
+
 bool Integer::isNegative() const noexcept {
     return is_negative_;
 }

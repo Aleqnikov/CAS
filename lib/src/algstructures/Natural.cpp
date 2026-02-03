@@ -40,7 +40,6 @@ Natural::Natural(const std::vector<uint8_t>& CpNumbers) {
     }
 }
 
-// N1
 uint8_t Natural::cmp(const Natural* other) const {
     if (this->nums_.size() > other->nums_.size()) return 2;
     if (this->nums_.size() < other->nums_.size()) return 1;

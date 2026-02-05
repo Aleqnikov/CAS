@@ -98,6 +98,8 @@ TEST(PolynomMultiply, Basic) {
     Polynom p1({Rational("1"), Rational("1")});
     Polynom p2({Rational("1"), Rational("1")});
     Polynom result = p1 * p2;
+
+
     EXPECT_EQ(result.getDegree(), 2);
     EXPECT_EQ(result.getCoefficients()[0].toString(), "1/1");
     EXPECT_EQ(result.getCoefficients()[1].toString(), "2/1");

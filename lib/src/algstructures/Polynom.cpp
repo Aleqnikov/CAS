@@ -240,7 +240,7 @@ Polynom Polynom::operator%(const Polynom& other) const {
 Polynom Polynom::gcd(const Polynom& a, const Polynom& b) {
     if ((a.getDegree() == 0 && a.coefficients_[0].getNumerator().getSign() == 0) ||
         (b.getDegree() == 0 && b.coefficients_[0].getNumerator().getSign() == 0)) {
-        throw UniversalStringException("Polynom:  cannot compute GCD with zero polynomial");
+        throw UniversalStringException("Polynom:   cannot compute GCD with zero polynomial");
     }
     
     Polynom first = a;

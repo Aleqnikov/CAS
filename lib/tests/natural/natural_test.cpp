@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "algstructures/Natural.h"
 
+
 // N1 — cmp
 TEST(NaturalCmp, Basic) {
     Natural a("123");
@@ -74,9 +75,9 @@ TEST(NaturalGetFirstDivisionDigit, Basic) {
 
 // N11 — /
 TEST(NaturalQuotient, Basic) {
-    Natural a("100");
-    Natural b("23");
-    EXPECT_EQ((a / b).toString(), "4");
+	Natural a("100");
+	Natural b("23");
+	EXPECT_EQ((a / b).toString(), "4");
 }
 
 // N12 — %

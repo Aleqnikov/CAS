@@ -25,13 +25,13 @@ concept Semigroup = Magma<T, Op> && IsAssociative<Op>;
  * @brief Концепт моноида 
  */
 template<typename T, typename Op>
-concept Monoid = Semigroup<T, Op> && Identity<T>;
+concept Monoid = Semigroup<T, Op> && IsIdentity<T>;
 
 /**
  * @brief Концеп группы 
  */
 template<typename T, typename Op>
-concept Group = Monoid<T, Op> && Inverse<T>;
+concept Group = Monoid<T, Op> && IsInverse<T>;
 
 /**
  * @brief Концепт Абелевой группы
@@ -39,5 +39,15 @@ concept Group = Monoid<T, Op> && Inverse<T>;
 template<typename T, typename Op>
 concept AbelianGroup = Group<T, Op> && IsCommutative<Op>;                                                         
                                                                 
+
+/**
+ * Пример создание какой то групповой структуры.
+ * 
+ * @code
+ * template<typename T, typename Op>
+ * requires Group<T, Op>
+ * class GL {...}
+ * @endcode
+ */
 
 #endif //GROUPS_H

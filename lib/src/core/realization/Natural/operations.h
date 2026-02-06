@@ -15,6 +15,8 @@
 
 #include "Exceptions/UniversalStringException.h"
 
+namespace NatOper {
+
 /**
  * @brief Реализация операции сложения для Natural. Это уже именно реализация, которая зависит от типа, 
  * над которым происходи действие.
@@ -80,12 +82,6 @@ public:
 
 
 /**
- * @brief Регистрация дистрибутивности: умножение дистрибутивно относительно сложения.
- */
-template<>
-struct Distributive<Mul, Add> {};  
-
-/**
  * @brief Оператор сравнения элементов в натуральных числах.
  */
 class Cmp : public Mapping<Cmp, int, Natural, Natural>
@@ -106,7 +102,7 @@ public:
 
 
 // Вспомогательная функция, нужна для других важный функций Натуральных чисел.
-Natural multiplyByPowerOfTen(Natural& num1, std::size_t k)
+inline Natural multiplyByPowerOfTen(Natural& num1, std::size_t k)
 {
     if (Cmp::execute(num1, Natural({0})) == 0)
 		return num1;
@@ -125,7 +121,7 @@ Natural multiplyByPowerOfTen(Natural& num1, std::size_t k)
 }
 
 // Вспомогательная функция, нужна для других важный функций Натуральных чисел.
-Natural multibleByDigit(const Natural& num1, std::size_t b)
+inline Natural multibleByDigit(const Natural& num1, std::size_t b)
 {
     if (b > 9) {
         throw UniversalStringException("Natural:  digit out of range (" + std::to_string(b) + ")");
@@ -183,7 +179,7 @@ public:
 
 
 // Вспомогательная функция, нужна для других важный функций Натуральных чисел.
-Natural subMultipied(const Natural& num1, const Natural& num2, std::size_t c)
+inline Natural subMultipied(const Natural& num1, const Natural& num2, std::size_t c)
 {
     if (c > 9)
 		throw UniversalStringException("Natural:  The multiplier is not a digit from 0 to 9!");
@@ -314,5 +310,13 @@ public:
         return result;
     }
 };
+
+}
+
+/**
+ * @brief Регистрация дистрибутивности: умножение дистрибутивно относительно сложения.
+ */
+template<>
+struct Distributive<NatOper::Mul, NatOper::Add> {};  
 
 #endif //OPERATIONS_NATURAL_H

@@ -25,7 +25,7 @@ concept Semigroup = Magma<T, Op> && IsAssociative<Op>;
  * @brief Концепт моноида 
  */
 template<typename T, typename Op>
-concept Monoid = Semigroup<T, Op> && HasIdentity<Op>;  // ИСПРАВЛЕНО: IsIdentity -> HasIdentity
+concept Monoid = Semigroup<T, Op> && HasIdentity<Op>;
 
 /**
  * @brief Концеп группы 

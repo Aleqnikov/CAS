@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "core/realization/Natural/N.h"
 
+
+
 // Хелпер для удобства тестов
 N fromStr(const std::string& str) {
     std::vector<uint8_t> digits;
@@ -34,14 +36,14 @@ TEST(NaturalSubtract1, Basic) {
 // N6 — multibleByDigit
 TEST(NaturalMultiplyByDigit1, Basic) {
     N a = fromStr("123");
-    EXPECT_EQ(N(multibleByDigit(a.get(), 3)).toString(), "369");
+    EXPECT_EQ(N(NatOper::multibleByDigit(a.get(), 3)).toString(), "369");
 }
 
 // N7 — multiplyByPowerOfTen
 TEST(NaturalMultiplyByPowerOfTen1, Basic) {
     N a = fromStr("123");
     Natural temp = a.get();
-    EXPECT_EQ(N(multiplyByPowerOfTen(temp, 2)).toString(), "12300");
+    EXPECT_EQ(N(NatOper::multiplyByPowerOfTen(temp, 2)).toString(), "12300");
 }
 
 // N8 — Mul
@@ -65,13 +67,13 @@ TEST(NaturalRemainder1, Basic) {
 // N13 — Gcd
 TEST(NaturalGCD1, Basic) {
     N a = fromStr("48"), b = fromStr("18");
-    EXPECT_EQ(N(Gcd::execute(a.get(), b.get())).toString(), "6");
+    EXPECT_EQ(N::gcd(a, b).toString(), "6");
 }
 
 // N14 — Lcm
 TEST(NaturalLCM1, Basic) {
     N a = fromStr("48"), b = fromStr("18");
-    EXPECT_EQ(N(Lcm::execute(a.get(), b.get())).toString(), "144");
+    EXPECT_EQ(N::lcm(a, b).toString(), "144");
 }
 
 // Дополнительные проверки логики

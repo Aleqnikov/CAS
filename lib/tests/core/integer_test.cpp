@@ -117,3 +117,17 @@ TEST(IntegerRem2, ThrowsOnZero) {
     Z zero(Natural({0}), false);     // 0
     EXPECT_THROW(a % zero, UniversalStringException);
 }
+
+TEST(RingTestInteger, bas5) {
+	bool res = UnitaryRing<Z::SetType, Z::AdditionOp, Z::MultiplicationOp>;
+
+
+	EXPECT_EQ(res, true);
+}
+
+TEST(FieldTestInteger, base12) {
+	bool res = Field<Z::SetType, Z::AdditionOp, Z::MultiplicationOp>;
+
+
+	EXPECT_EQ(res, false);
+}

@@ -88,3 +88,8 @@ TEST(NaturalExtra1, EdgeCases) {
     // Деление на ноль
     EXPECT_THROW(fromStr("10") / fromStr("0"), UniversalStringException);
 }
+
+TEST(RingTestNaturel, baseN) {
+	bool res = Ring<N::SetType, N::AdditionOp, N::MultiplicationOp>;
+	EXPECT_EQ(res, false);
+}

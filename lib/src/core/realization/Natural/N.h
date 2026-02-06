@@ -21,6 +21,7 @@ public:
     // Определяем типы операций для концептов
     using AdditionOp = NatOper::Add;
     using MultiplicationOp = NatOper::Mul;
+	using SetType = Natural;
 
     N(Natural v) : value(std::move(v)) {}
     N(const std::vector<uint8_t>& nums) : value(nums) {}

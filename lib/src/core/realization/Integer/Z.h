@@ -22,6 +22,7 @@ public:
     // Определяем типы операций для концептов
     using AdditionOp = Int::Add;
     using MultiplicationOp = Int::Mul;
+	using SetType = Integer;
 
     Z(Integer v) : value(std::move(v)) {}
     Z(Natural num, bool is_neg) : value(num, is_neg) {}

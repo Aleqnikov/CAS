@@ -42,10 +42,10 @@ const Natural& Rational::getDenominator() const noexcept {
 void Rational::reduce() {
     Natural numerator_abs = numerator_.abs();
     Natural gcd = Natural::gcd(numerator_abs, denominator_);
-    
+
     if (gcd.toString() == "1")
         return;
-    
+
     Integer gcd_as_int = Integer::fromNatural(gcd);
     numerator_ = numerator_ / gcd_as_int;
     denominator_ = denominator_ / gcd;

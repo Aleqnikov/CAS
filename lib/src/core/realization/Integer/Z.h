@@ -26,6 +26,11 @@ public:
 
     Z(Integer v) : value(std::move(v)) {}
     Z(Natural num, bool is_neg) : value(num, is_neg) {}
+    Z(N num) : value(num.get(), false) {}
+
+    Z operator-() {
+        return Int::Neg::execute(value);
+    }
 
     Z operator+(const Z& other) const { 
         return Z(Int::Add::execute(value, other.value));

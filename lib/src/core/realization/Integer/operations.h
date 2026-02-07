@@ -24,7 +24,7 @@ public:
 
 
 // Вспомогательная функция для целых чисел
-uint8_t getSign(Integer num) {
+inline uint8_t getSign(Integer num) {
     if (!(num.natural != N({0})))
         return 0;
     return num.is_neg ? 1 : 2;

@@ -76,10 +76,14 @@ public:
         return Int::Abs::execute(a.get());
     }
 
+    bool isNegative() const { return value.is_neg; }
+
+    static Z zero() { return Z(Natural({0}), false); }
+    static Z identity() { return Z(Natural({1}), false); }  // Единица
 
     const Integer& get() const { return value; }
 
-    std::string toString() {
+    std::string toString()const {
         return Int::toString::execute(value);
     }
 };

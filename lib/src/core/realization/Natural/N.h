@@ -68,9 +68,12 @@ public:
     }
 
 
+    static N zero() { return N({0}); }
+    static N identity() { return N({1}); }
+
     const Natural& get() const { return value; }
 
-    std::string toString() {
+    std::string toString() const {
         return NatOper::toString::execute(value);
     }
 };

@@ -62,7 +62,12 @@ public:
        value = Rat::Red::execute(value);
     }
 
-    std::string toString() {
+    bool isNegative() const { return value.numerator.isNegative(); }
+
+    static Q zero() { return Q(Z::zero(), N({1})); }
+    static Q identity() { return Q(Z::identity(), N({1})); }  // 1/1
+
+    std::string toString() const {
         return Rat::toString::execute(value);
     }
 };

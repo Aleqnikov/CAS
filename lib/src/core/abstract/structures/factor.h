@@ -1,13 +1,19 @@
 #ifndef FACTORSTRUCTURES_H
 #define FACTORSTRUCTURES_H
 
-
 #include "groups.h"
 #include "commuttative_algebra.h"
 #include "rings.h"
 
 /**
  * @brief В данном файле созданы основные шаблоны, методы, для создания какой либо факторструктуры.
+ * 
+ * Любое новое фактор поле задается следующим образом - строится идеал, на основе темплейтов из коммутативной
+ * алгебры, и затем он просто передается как аргумент в шаблон фактор поля.
+ * 
+ * @code
+ * using Zp = FactorField<Z, PrincipalIdealZ<p>>;
+ * @endcode
  */
 
 
@@ -24,7 +30,7 @@ protected:
 public:
     FactorRing(R value) : representative(I::representative(value)) {}
 
-    class QAdd : public BinaryOperation<QAdd, FactorRing>,
+    class QAdd : public BinaryOperation<QAdd, FactorRing>,                      
                  public Associative,
                  public Commutative,
                  public Identity,
@@ -57,9 +63,6 @@ public:
         return QMul::execute(*this, other);
     }
 
-
-    FactorRing operator/(const FactorRing& other) const;
-
     FactorRing operator-(const FactorRing& other) const {
         R diff = representative - other.representative;
         return FactorRing(diff);
@@ -67,6 +70,10 @@ public:
 
     bool operator==(const FactorRing& other) const {
         return representative == other.representative;
+    }
+
+    FactorRing operator-() const {
+        return FactorRing(R::zero() - representative);
     }
 
     static FactorRing zero() {
@@ -94,15 +101,16 @@ public:
 };
 
 
-
 /**
- * @brief Факторполе R/I (когда I максимален)
+ * @brief Факторполе R/I Тогда и только тогда, когда идеал I максимален.
  */
 template<typename R, typename I>
 requires UnitaryRing<typename R::SetType, typename R::AdditionOp, typename R::MultiplicationOp> 
       && MaximalIdeal<I, R>
 class FactorField : public FactorRing<R, I> {
 public:
+
+
     FactorField(FactorRing<R, I> other) : FactorRing<R, I>(std::move(other)) {}
 
     using FactorRing<R, I>::FactorRing;
@@ -134,18 +142,18 @@ public:
 
     FactorField operator/(const FactorField& other) const {
         if (other == FactorField::zero())
-            throw UniversalStringException("Division by zero in field");
+            throw UniversalStringException("FactorField: Division by zero in field");
 
         return QMul::execute(*this, inverse(other));
     }
 
 
+    
+
 	FactorField operator-(const FactorField& other) const {
-    	// Вызываем базовый оператор- и оборачиваем результат в конструктор поля
     	return FactorField(FactorRing<R, I>::operator-(other));
     }
 
-	// Также стоит переопределить унарный минус для удобства (если он есть)
 	FactorField operator-() const {
     	return FactorField(R::zero() - this->representative);
     }

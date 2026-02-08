@@ -8,14 +8,14 @@
 
 int main() {
 	// Z/5Z - поле из 5 элементов
-	Zp<5> a(Z(N({6})));  // 3
-	Zp<5> b(Z(N({4})));  // 4
+	Zp<13> a(Z(N({6})));  // 3
+	Zp<13> b(Z(N({4})));  // 4
 
-	P<Zp<5>> poly({a ,b});
+	P<Zp<13>> poly({a ,b});
 
 	std::cout << poly.toString() << std::endl;
 
-	auto res = poly + poly;
+	auto res = poly * poly*poly ;
 
 	std::cout << res.toString() << std::endl;
     return 0;

@@ -20,19 +20,16 @@ struct Polynomial {
 	Polynomial(const std::vector<T>& coeffs) : coefficients(coeffs) {
 		T zero = T::zero();
 
-		// Удаляем ведущие нули
 		while (coefficients.size() > 1 && coefficients.back() == zero) {
 			coefficients.pop_back();
 		}
 
-		// Полином должен иметь хотя бы один коэффициент
 		if (coefficients.empty()) {
 			coefficients.push_back(zero);
 		}
 	}
-    /**
-     * @brief Степень полинома
-     */
+
+
 	size_t degree() const {
 		T zero = T::zero();
 

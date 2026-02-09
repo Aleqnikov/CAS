@@ -1,24 +1,32 @@
-#ifndef UNIVERSALSTRINGEXCEPTION_H
-#define UNIVERSALSTRINGEXCEPTION_H
+#ifndef CAS_EXCEPTIONS_H
+#define CAS_EXCEPTIONS_H
 
-
-#include <exception>
 #include <string>
+#include <exception>
 
-class UniversalStringException : public std::exception{
+// Твой базовый класс
+class UniversalStringException : public std::exception {
 public:
-    UniversalStringException(const std::string& message): message{message}{}
-
-    const char* what() const noexcept override
-    {
-        return message.c_str();
-    }
-
+	UniversalStringException(const std::string& message) : message{message} {}
+	const char* what() const noexcept override {
+		return message.c_str();
+	}
 private:
-    std::string message;
+	std::string message;
 };
 
+// Ошибка, связанная со структурой данных Aho-Corasick
+class AhoCorasickException : public UniversalStringException {
+public:
+	explicit AhoCorasickException(const std::string& msg)
+		: UniversalStringException("Aho-Corasick Error: " + msg) {}
+};
 
+// Ошибка токенизации (например, неизвестный символ)
+class TokenizerException : public UniversalStringException {
+public:
+	explicit TokenizerException(const std::string& msg, size_t pos = 0)
+		: UniversalStringException("Tokenizer Error at pos " + std::to_string(pos) + ": " + msg) {}
+};
 
-#endif //UNIVERSALSTRINGEXCEPTION_H
-
+#endif // CAS_EXCEPTIONS_H
